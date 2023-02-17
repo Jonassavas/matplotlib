@@ -50,8 +50,8 @@ Functions:
 * 15 CC, 54 LOC draw@440-493@./lib/mpl_toolkits/mplot3d/axes3d.py
 
 * Jonas's functions:
-* 15 CC, 35 LOC margins@534-568@./lib/mpl_toolkits/mplot3d/axes3d.py
-* 18 CC, 61 LOC autoscale_view@619-679@./lib/mpl_toolkits/mplot3d/axes3d.py
+* 36     21    303      6      86 get_tightbbox@4332-4417@./axes/_base.py
+* 27     19    228      1      33 ginput.handler@3416-3448@./figure.py
 
 * Ronan's functions:
 * 77 CC 208 LOC voxels@2648-2855@./lib/mpl_toolkits/mplot3d/axes3d.py
