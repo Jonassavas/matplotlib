@@ -37,9 +37,10 @@ From the `./lib/matplotlib` directory which avoids the test-files.
 
 Functions: 
 * pontus's:
-* 51 NLOC, 17 CC generate_function@120-207@./tools/boilerplate.py
+* 57 NLOC, 17 CC get_tight_layout_figure@194-301@./_tight_layout.py
+* 34 NLOC 19 CC _parse_legend_args@1260-1355@./legend.py
 
-65 NLOC, 17 CC run@48-129@./tools/visualize_tests.py
+
 * Klara's functions:
 
 * 130 NLOC, 32 CCN subsuper@2254-2414@./_mathtext.py
@@ -50,8 +51,8 @@ Functions:
 * 15 CC, 54 LOC draw@440-493@./lib/mpl_toolkits/mplot3d/axes3d.py
 
 * Jonas's functions:
-* 15 CC, 35 LOC margins@534-568@./lib/mpl_toolkits/mplot3d/axes3d.py
-* 18 CC, 61 LOC autoscale_view@619-679@./lib/mpl_toolkits/mplot3d/axes3d.py
+* 36     21    303      6      86 get_tightbbox@4332-4417@./axes/_base.py
+* 27     19    228      1      33 ginput.handler@3416-3448@./figure.py
 
 * Ronan's functions:
 * 77 CC 208 LOC voxels@2648-2855@./lib/mpl_toolkits/mplot3d/axes3d.py
