@@ -37,11 +37,11 @@ From the `./lib/matplotlib` directory which avoids the test-files.
 
 Functions: 
 * pontus's:
-* 51 NLOC, 17 CC generate_function@120-207@./tools/boilerplate.py
+* 57 NLOC, 17 CC get_tight_layout_figure@194-301@./_tight_layout.py
+* 34 NLOC 19 CC _parse_legend_args@1260-1355@./legend.py
 
-65 NLOC, 17 CC run@48-129@./tools/visualize_tests.py
+
 * Klara's functions:
-
 * 32 CC, 161 LOC subsuper@2254-2414@./lib/matplotlib/_mathtext.py
 * 32 CC, 138 LOC _auto_adjust_subplotpars@20-157@./lib/matplotlib/_tight_layout.py
 
