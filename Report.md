@@ -35,9 +35,30 @@ From the `./lib/matplotlib` directory which avoids the test-files.
    * Are the results clear?
 2. Are the functions just complex, or also long?
 
+Functions: 
+* pontus's:
+* 51 NLOC, 17 CC generate_function@120-207@./tools/boilerplate.py
 
-48 CC, 365 LOC errorbar@3346-3710@./lib/matplotlib/axes/_axes.py
-34 CC, 294 LOC bar@2240-2533@./lib/matplotlib/axes/_axes.py
+65 NLOC, 17 CC run@48-129@./tools/visualize_tests.py
+* Klara's functions:
+
+* 32 CC, 161 LOC subsuper@2254-2414@./lib/matplotlib/_mathtext.py
+* 32 CC, 138 LOC _auto_adjust_subplotpars@20-157@./lib/matplotlib/_tight_layout.py
+
+* Ahmad's functions:
+* 15 CC, 68 LOC do_3d_projection@966-1033@./lib/mpl_toolkits/mplot3d/art3d.py
+* 15 CC, 54 LOC draw@440-493@./lib/mpl_toolkits/mplot3d/axes3d.py
+
+* Jonas's functions:
+* 15 CC, 35 LOC margins@534-568@./lib/mpl_toolkits/mplot3d/axes3d.py
+* 18 CC, 61 LOC autoscale_view@619-679@./lib/mpl_toolkits/mplot3d/axes3d.py
+
+* Ronan's functions:
+* 77 CC 208 LOC voxels@2648-2855@./lib/mpl_toolkits/mplot3d/axes3d.py
+* 109 CC, 180 LOC draw@349-528@./lib/mpl_toolkits/mplot3d/axis3d.py
+
+
+
 
 3. What is the purpose of the functions?
 4. Are exceptions taken into account in the given measurements?
