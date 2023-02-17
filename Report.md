@@ -42,8 +42,8 @@ Functions:
 65 NLOC, 17 CC run@48-129@./tools/visualize_tests.py
 * Klara's functions:
 
-* 32 CC, 161 LOC subsuper@2254-2414@./lib/matplotlib/_mathtext.py
-* 32 CC, 138 LOC _auto_adjust_subplotpars@20-157@./lib/matplotlib/_tight_layout.py
+* 130 NLOC, 32 CCN subsuper@2254-2414@./_mathtext.py
+* 35 NLOC, 16 CCN _keypress@1463-1497@./widgets.py
 
 * Ahmad's functions:
 * 15 CC, 68 LOC do_3d_projection@966-1033@./lib/mpl_toolkits/mplot3d/art3d.py
