@@ -44,7 +44,8 @@ from matplotlib.testing.decorators import (
 """
 Tests the creation of a log log horizontal histogram
 with the same coordinates and opposite orientations.
-Log is enabled for both axes to take the corresponding branch.
+Log is enabled for both axes to take a new branch within
+the function.
 
 Precondition: There exists an x-vector with with three integers
               in two calls of the hist() function where one has
@@ -64,7 +65,7 @@ def test_hist_log_orientation():
 """
 Tests the creation of a log log horizontal histogram
 with the same coordinates and opposite orientations.
-Density is enabled to reach the corresponding branch.
+Density is enabled to reach a new branch within the function.
 
 Precondition: There exists an x-vector with with three integers
               in two calls of the hist() function where one has
@@ -85,7 +86,7 @@ def test_hist_log_orientation_density():
 """
 Tests the creation of a log log horizontal histogram
 with the same coordinates and opposite orientations.
-Cumulative is enabled to reach 
+Cumulative is enabled to reach a new branch within the function.
 
 Precondition: There exists an x-vector with with three integers
               in two calls of the hist() function where one has
@@ -109,11 +110,16 @@ with too many colors that raises an exception to reach
 a new branch.
 
 Precondition: There exists a valid x-vector with with three integers
-              and a colors vector that includes too many colors.
-Postcondition: The hist function throws an exception.
+              and a colors vector that includes too many colors, 6, for
+              only one dataset. 
+Postcondition: The hist function raises a ValueError with the correct
+               string within that branch.
 """
 def test_hist_orientation_density_right():
     fig, axs = plt.subplots(2)
     #axs[0].hist([0, 0, 1], orientation='horizontal', align='right', log=True)
-    with pytest.raises(Exception) as e_info:
+    with pytest.raises(ValueError, match=(f"The 'color' keyword argument must have one "
+                                 f"color per dataset, but {1} datasets and "
+                                 f"{6} colors were provided")):
         axs[0].hist([0, 0, 1], orientation='horizontal', density=True, cumulative=True, stacked=True, color=['green', 'red', 'blue', 'black', 'white', 'pink'])
+    
