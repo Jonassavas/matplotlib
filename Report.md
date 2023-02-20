@@ -123,11 +123,38 @@ Number of test cases added: two per team member (P) or at least four (P+).
 
 Current state according to the Essence standard: ...
 
+
+* The key practices and tools that form the foundation of the way-of-working are
+selected.
+  * Github, Discord, Lizard, Coverage
+  * Commit templates and issue tracker
+* Enough practices for work to start are agreed to by the team.
+  * Yes we agree that we have enough
+* All non-negotiable practices and tools have been identified.
+  * Yes
+* The gaps that exist between the practices and tools that are needed and the practices and
+tools that are available have been analyzed and understood.
+   * 
+* The capability gaps that exist between what is needed to execute the desired way of
+working and the capability levels of the team have been analyzed and understood.
+  * 
+* The selected practices and tools have been integrated to form a usable way-of-working.
+  * 
+
+
+
+
 Was the self-assessment unanimous? Any doubts about certain items?
 
 How have you improved so far?
 
+Since this is our first assignment together we have improved from not having worked together to being in the ""
+"Foundations Established" state.
+
 Where is potential for improvement?
+
+We had some issues setting up the development environment required to run the tests in Matplotlib
+so some members had to get assistance from other members to run their tests.
 
 ## Overall experience
 
