@@ -1438,6 +1438,29 @@ class Axes(_AxesBase):
 
         return colls
 
+ 
+    def refactorPatches(self, x, y, colors, fill, split, patches, orientation, xvals, yvals):
+        for x, y, color in reversed(list(zip(xvals, yvals, colors))):
+                histBranchBools[60] = True
+                patches.append(self.fill(
+                    x[:split], y[:split],
+                    closed=True if fill else None,
+                    facecolor=color,
+                    edgecolor=None if fill else color,
+                    fill=fill if fill else None,
+                    zorder=None if fill else mlines.Line2D.zorder))
+        for patch_list in patches:
+            histBranchBools[61] = True
+            for patch in patch_list:
+                histBranchBools[62] = True
+                if orientation == 'vertical':
+                    histBranchBools[63] = True
+                    patch.sticky_edges.y.append(0)
+                elif orientation == 'horizontal':
+                    histBranchBools[64] = True
+                    patch.sticky_edges.x.append(0)
+        return patches
+
     #### Basic plotting
 
     # Uses a custom implementation of data-kwarg handling in
@@ -6488,6 +6511,153 @@ default: :rc:`scatter.edgecolors`
         """
         return CS.clabel(levels, **kwargs)
 
+
+    def refactorHistBar(self, colors, nx, patches, tops, bins=None, bottom=None, histtype='bar', align='mid',
+             orientation='vertical', rwidth=None, log=False,
+             color=None, stacked=False):
+        histBranchBools[32] = True
+        totwidth = np.diff(bins)
+
+        if rwidth is not None:
+            histBranchBools[33] = True
+            dr = np.clip(rwidth, 0, 1)
+        elif (len(tops) > 1 and
+                ((not stacked) or mpl.rcParams['_internal.classic_mode'])):
+            dr = 0.8
+            histBranchBools[34] = True
+        else:
+            dr = 1.0
+            histBranchBools[35] = True
+
+        if histtype == 'bar' and not stacked:
+            histBranchBools[36] = True
+            width = dr * totwidth / nx
+            dw = width
+            boffset = -0.5 * dr * totwidth * (1 - 1 / nx)
+        elif histtype == 'barstacked' or stacked:
+            histBranchBools[37] = True
+            width = dr * totwidth
+            boffset, dw = 0.0, 0.0
+
+        if align == 'mid':
+            histBranchBools[38] = True
+            boffset += 0.5 * totwidth
+        elif align == 'right':
+            histBranchBools[39] = True
+            boffset += totwidth
+
+        if orientation == 'horizontal':
+            histBranchBools[40] = True
+            _barfunc = self.barh
+            bottom_kwarg = 'left'
+        else:  # orientation == 'vertical'
+            histBranchBools[41] = True
+            _barfunc = self.bar
+            bottom_kwarg = 'bottom'
+
+        for top, color in zip(tops, colors):
+            histBranchBools[42] = True
+            if bottom is None:
+                histBranchBools[43] = True
+                bottom = np.zeros(len(top))
+            if stacked:
+                histBranchBools[44] = True
+                height = top - bottom
+            else:
+                histBranchBools[45] = True
+                height = top
+            bars = _barfunc(bins[:-1]+boffset, height, width,
+                            align='center', log=log,
+                            color=color, **{bottom_kwarg: bottom})
+            patches.append(bars)
+            if stacked:
+                histBranchBools[46] = True
+                bottom = top
+            boffset += dw
+        # Remove stickies from all bars but the lowest ones, as otherwise
+        # margin expansion would be unable to cross the stickies in the
+        # middle of the bars.
+        for bars in patches[1:]:
+            histBranchBools[47] = True
+            for patch in bars:
+                histBranchBools[48] = True
+                patch.sticky_edges.x[:] = patch.sticky_edges.y[:] = []
+        return patches, bottom
+
+
+    def refactorHistBarStep(self, x, colors, tops, patches, bins=None, bottom=None, histtype='bar', align='mid',
+             orientation='vertical', log=False, stacked=False):
+        histBranchBools[49] = True
+        # these define the perimeter of the polygon
+        x = np.zeros(4 * len(bins) - 3)
+        y = np.zeros(4 * len(bins) - 3)
+
+        x[0:2*len(bins)-1:2], x[1:2*len(bins)-1:2] = bins, bins[:-1]
+        x[2*len(bins)-1:] = x[1:2*len(bins)-1][::-1]
+
+        if bottom is None:
+            histBranchBools[50] = True
+            bottom = 0
+
+        y[1:2*len(bins)-1:2] = y[2:2*len(bins):2] = bottom
+        y[2*len(bins)-1:] = y[1:2*len(bins)-1][::-1]
+
+        if log:
+            histBranchBools[51] = True
+            if orientation == 'horizontal':
+                histBranchBools[52] = True
+                self.set_xscale('log', nonpositive='clip')
+            else:  # orientation == 'vertical'
+                histBranchBools[53] = True
+                self.set_yscale('log', nonpositive='clip')
+
+        if align == 'left':
+            histBranchBools[54] = True
+            x -= 0.5*(bins[1]-bins[0])
+        elif align == 'right':
+            histBranchBools[55] = True
+            x += 0.5*(bins[1]-bins[0])
+
+        # If fill kwarg is set, it will be passed to the patch collection,
+        # overriding this
+        fill = (histtype == 'stepfilled')
+
+        xvals, yvals = [], []
+        for top in tops:
+            histBranchBools[56] = True
+            if stacked:
+                histBranchBools[57] = True
+                # top of the previous polygon becomes the bottom
+                y[2*len(bins)-1:] = y[1:2*len(bins)-1][::-1]
+            # set the top of this polygon
+            y[1:2*len(bins)-1:2] = y[2:2*len(bins):2] = top + bottom
+
+            # The starting point of the polygon has not yet been
+            # updated. So far only the endpoint was adjusted. This
+            # assignment closes the polygon. The redundant endpoint is
+            # later discarded (for step and stepfilled).
+            y[0] = y[-1]
+
+            if orientation == 'horizontal':
+                histBranchBools[58] = True
+                xvals.append(y.copy())
+                yvals.append(x.copy())
+            else:
+                histBranchBools[59] = True
+                xvals.append(x.copy())
+                yvals.append(y.copy())
+        # stepfill is closed, step is not
+        split = -1 if fill else 2 * len(bins)
+        # add patches in reverse order so that when stacking,
+        # items lower in the stack are plotted on top of
+        # items higher in the stack
+        patches = self.refactorPatches(x, y, colors, fill, split, patches, orientation, xvals, yvals)
+
+        # we return patches, so put it back in the expected order
+        patches.reverse()
+
+        return patches, bottom
+
     #### Data analysis
 
     @_preprocess_data(replace_names=["x", 'weights'], label_namer="x")
@@ -6841,162 +7011,13 @@ such objects
         patches = []
 
         if histtype.startswith('bar'):
-            histBranchBools[32] = True
-            totwidth = np.diff(bins)
+            patches, bottom = self.refactorHistBar(colors, nx, patches, tops, bins, bottom, histtype, align,
+             orientation, rwidth, log, color, stacked)
 
-            if rwidth is not None:
-                histBranchBools[33] = True
-                dr = np.clip(rwidth, 0, 1)
-            elif (len(tops) > 1 and
-                  ((not stacked) or mpl.rcParams['_internal.classic_mode'])):
-                dr = 0.8
-                histBranchBools[34] = True
-            else:
-                dr = 1.0
-                histBranchBools[35] = True
-
-            if histtype == 'bar' and not stacked:
-                histBranchBools[36] = True
-                width = dr * totwidth / nx
-                dw = width
-                boffset = -0.5 * dr * totwidth * (1 - 1 / nx)
-            elif histtype == 'barstacked' or stacked:
-                histBranchBools[37] = True
-                width = dr * totwidth
-                boffset, dw = 0.0, 0.0
-
-            if align == 'mid':
-                histBranchBools[38] = True
-                boffset += 0.5 * totwidth
-            elif align == 'right':
-                histBranchBools[39] = True
-                boffset += totwidth
-
-            if orientation == 'horizontal':
-                histBranchBools[40] = True
-                _barfunc = self.barh
-                bottom_kwarg = 'left'
-            else:  # orientation == 'vertical'
-                histBranchBools[41] = True
-                _barfunc = self.bar
-                bottom_kwarg = 'bottom'
-
-            for top, color in zip(tops, colors):
-                histBranchBools[42] = True
-                if bottom is None:
-                    histBranchBools[43] = True
-                    bottom = np.zeros(len(top))
-                if stacked:
-                    histBranchBools[44] = True
-                    height = top - bottom
-                else:
-                    histBranchBools[45] = True
-                    height = top
-                bars = _barfunc(bins[:-1]+boffset, height, width,
-                                align='center', log=log,
-                                color=color, **{bottom_kwarg: bottom})
-                patches.append(bars)
-                if stacked:
-                    histBranchBools[46] = True
-                    bottom = top
-                boffset += dw
-            # Remove stickies from all bars but the lowest ones, as otherwise
-            # margin expansion would be unable to cross the stickies in the
-            # middle of the bars.
-            for bars in patches[1:]:
-                histBranchBools[47] = True
-                for patch in bars:
-                    histBranchBools[48] = True
-                    patch.sticky_edges.x[:] = patch.sticky_edges.y[:] = []
 
         elif histtype.startswith('step'):
-            histBranchBools[49] = True
-            # these define the perimeter of the polygon
-            x = np.zeros(4 * len(bins) - 3)
-            y = np.zeros(4 * len(bins) - 3)
-
-            x[0:2*len(bins)-1:2], x[1:2*len(bins)-1:2] = bins, bins[:-1]
-            x[2*len(bins)-1:] = x[1:2*len(bins)-1][::-1]
-
-            if bottom is None:
-                histBranchBools[50] = True
-                bottom = 0
-
-            y[1:2*len(bins)-1:2] = y[2:2*len(bins):2] = bottom
-            y[2*len(bins)-1:] = y[1:2*len(bins)-1][::-1]
-
-            if log:
-                histBranchBools[51] = True
-                if orientation == 'horizontal':
-                    histBranchBools[52] = True
-                    self.set_xscale('log', nonpositive='clip')
-                else:  # orientation == 'vertical'
-                    histBranchBools[53] = True
-                    self.set_yscale('log', nonpositive='clip')
-
-            if align == 'left':
-                histBranchBools[54] = True
-                x -= 0.5*(bins[1]-bins[0])
-            elif align == 'right':
-                histBranchBools[55] = True
-                x += 0.5*(bins[1]-bins[0])
-
-            # If fill kwarg is set, it will be passed to the patch collection,
-            # overriding this
-            fill = (histtype == 'stepfilled')
-
-            xvals, yvals = [], []
-            for top in tops:
-                histBranchBools[56] = True
-                if stacked:
-                    histBranchBools[57] = True
-                    # top of the previous polygon becomes the bottom
-                    y[2*len(bins)-1:] = y[1:2*len(bins)-1][::-1]
-                # set the top of this polygon
-                y[1:2*len(bins)-1:2] = y[2:2*len(bins):2] = top + bottom
-
-                # The starting point of the polygon has not yet been
-                # updated. So far only the endpoint was adjusted. This
-                # assignment closes the polygon. The redundant endpoint is
-                # later discarded (for step and stepfilled).
-                y[0] = y[-1]
-
-                if orientation == 'horizontal':
-                    histBranchBools[58] = True
-                    xvals.append(y.copy())
-                    yvals.append(x.copy())
-                else:
-                    histBranchBools[59] = True
-                    xvals.append(x.copy())
-                    yvals.append(y.copy())
-
-            # stepfill is closed, step is not
-            split = -1 if fill else 2 * len(bins)
-            # add patches in reverse order so that when stacking,
-            # items lower in the stack are plotted on top of
-            # items higher in the stack
-            for x, y, color in reversed(list(zip(xvals, yvals, colors))):
-                histBranchBools[60] = True
-                patches.append(self.fill(
-                    x[:split], y[:split],
-                    closed=True if fill else None,
-                    facecolor=color,
-                    edgecolor=None if fill else color,
-                    fill=fill if fill else None,
-                    zorder=None if fill else mlines.Line2D.zorder))
-            for patch_list in patches:
-                histBranchBools[61] = True
-                for patch in patch_list:
-                    histBranchBools[62] = True
-                    if orientation == 'vertical':
-                        histBranchBools[63] = True
-                        patch.sticky_edges.y.append(0)
-                    elif orientation == 'horizontal':
-                        histBranchBools[64] = True
-                        patch.sticky_edges.x.append(0)
-
-            # we return patches, so put it back in the expected order
-            patches.reverse()
+            patches, bottom = self.refactorHistBarStep(x, colors, tops, patches, bins, bottom, histtype, align,
+             orientation, log, stacked)
 
         # If None, make all labels None (via zip_longest below); otherwise,
         # cast each element to str, but keep a single str as it.
