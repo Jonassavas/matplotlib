@@ -12,6 +12,8 @@ streamBranchBools = [False for i in range(29)]
 
 tableBranchBools = [False for i in range(28)]
 
+get_subplot_BranchBools = [False for i in range(18)]
+
 
 def writeRes():
     currTakenBranches = 0
@@ -43,6 +45,21 @@ def writeRes():
         f"The table() function took {100 * (currTakenBranches / len(tableBranchBools))}% of its branches, {currTakenBranches} out of {len(tableBranchBools)}, during the tests.")
     f.write("\n")
 
+    ##Ronan
+    currTakenBranches = 0
+    global get_subplot_BranchBools
+    for currBranchNr in range(len(get_subplot_BranchBools)):
+        if (currBranchNr % 4 == 0 and currBranchNr != 0):
+            f.write("||\n")
+        f.write(f"|| Branch {currBranchNr} taken: {get_subplot_BranchBools[currBranchNr]} ")
+        if (get_subplot_BranchBools[currBranchNr]):
+            currTakenBranches += 1
+
+    f.write("||\n")
+    f.write(
+        f"The hist() function took {100 * (currTakenBranches / len(get_subplot_BranchBools))}% of its branches, {currTakenBranches} out of {len(get_subplot_BranchBools)}, during the tests.")
+    f.write("\n")
+
     #Klara
     currTakenBranches = 0
     global streamBranchBools
@@ -72,8 +89,7 @@ def writeRes():
 
     f.write("||\n")
     f.write(
-        f"The hist() function took {100 * (currTakenBranches / len(boxplotlist))}% of its branches, {currTakenBranches} out of {len(boxplotlist)}, during the tests.")
-    f.write("\n")
+        f"The hist() function took {100 * (currTakenBranches / len(boxplotlist))}% of its branches, {currTakenBranches} out of {len(boxplotlist)}, during the tests."a    f.write("\n")
 
     f.close()
 
