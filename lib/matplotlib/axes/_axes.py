@@ -6511,7 +6511,11 @@ default: :rc:`scatter.edgecolors`
         """
         return CS.clabel(levels, **kwargs)
 
-
+    """
+    Refactors a big if-statement that checks if the histtype starts with 'bar' 
+    and thereafter performs the corresponding calculations for the patches and bottom
+    variables.
+    """
     def refactorHistBar(self, colors, nx, patches, tops, bins=None, bottom=None, histtype='bar', align='mid',
              orientation='vertical', rwidth=None, log=False,
              color=None, stacked=False):
@@ -6584,8 +6588,12 @@ default: :rc:`scatter.edgecolors`
                 patch.sticky_edges.x[:] = patch.sticky_edges.y[:] = []
         return patches, bottom
 
-
-    def refactorHistBarStep(self, x, colors, tops, patches, bins=None, bottom=None, histtype='bar', align='mid',
+    """
+    Refactors a big elseif-statement that checks if the histtype starts with 'step' 
+    and thereafter performs the corresponding calculations for the patches and bottom
+    variables.
+    """
+    def refactorHistStep(self, x, colors, tops, patches, bins=None, bottom=None, histtype='bar', align='mid',
              orientation='vertical', log=False, stacked=False):
         histBranchBools[49] = True
         # these define the perimeter of the polygon
@@ -7016,7 +7024,7 @@ such objects
 
 
         elif histtype.startswith('step'):
-            patches, bottom = self.refactorHistBarStep(x, colors, tops, patches, bins, bottom, histtype, align,
+            patches, bottom = self.refactorHistStep(x, colors, tops, patches, bins, bottom, histtype, align,
              orientation, log, stacked)
 
         # If None, make all labels None (via zip_longest below); otherwise,
