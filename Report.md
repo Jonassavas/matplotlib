@@ -164,6 +164,11 @@ The complete results can be found [here](./lib/matplotlib/lizardResAfter.txt)
 57     17    431      8     108 get_tight_layout_figure@194-301@./_tight_layout.py
 //Pontus's new result
 47     10    346      8     114 get_tight_layout_figure@220-333@./_tight_layout.py
+
+//Ronan's old result:
+65     22    397      2     221 subplot@1129-1349@lib/matplotlib\pyplot.py
+//Ronan's new result:
+42     13    259      2     166 subplot@1170-1335@lib/matplotlib\pyplot.py
 ```
 
 #### Branch Coverage Improvement (P+):
@@ -209,8 +214,10 @@ Refactored the streamplot function to reduce the cyclomatic complexity from CNN 
 * Reduced the CCN from 17 -> 10 for the function get_tight_layout_figure() which is about 41% (get_tight_layout_figure@194-301@./_tight_layout.py) 
 * and improved branch coverage with 4 new tests for the function table() (table@654-830@./table.py) from 75% -> 89%
 
+#### Ronan
 
-
+* Improved branch coverage of subplot() with one test case and of figure() with 3 new test cases. Subplot's coverage went from 88% to 100% and figure's coverage went from 40% to 73%.
+* Reduced the CCN from 22 -> 13 for the subplot function() wich is about 41 % reduction.
 
 
 ## Coverage improvement
@@ -300,4 +307,9 @@ Ahmad: counted CCN by hand for _apply_params and plotbox() functions. In additio
 
 Jonas (aiming for P+): Counted CCN by hand for the subsuper() function, wrote the DIY branch coverage tool, implemented manual branch coverage for the hist() function, wrote four new tests for the hist() function to improve branch coverage from 81% to 88.9%, refactored the hist() function from CCN 77-42, wrote the report together with Klara, Pontus and Ahmad.
 
-Ronan (aiming for P+): counted CCN by hand for subplot() and figure() functions. In addition, implemented manual coverage for subplot() function. Wrote a test for subplot() and 3 for figure().
+Ronan (aiming for P+): 
+* Counted CCN by hand for subplot() and figure() functions. 
+* Implemented manual coverage for subplot() function.
+* Wrote a test for subplot() and 3 for figure().
+* Refactor subplot() function with 41% improvement.
+* Used the issue tracker and systematic commit messages.

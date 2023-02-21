@@ -31,7 +31,7 @@ def test_figure_not_managed_by_pyplot():
         plt.figure(num=fig)
     assert str(excinfo.value) == "The passed figure is not managed by pyplot"
 
-# if num is an instance of str
+# if num is an instance of str and str = "all" then we should throw a warning
 def test_figure_with_num_str():
      with pytest.warns(UserWarning) as warninginfo:
         plt.figure("all")
