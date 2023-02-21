@@ -42,8 +42,10 @@ Manual calculation: subsuper()
 PI = 37, s =  5 --> M = PI - s + 2 = 34
 
 //Ronan's functions
+64     15    353      9     152 figure@690-841@./pyplot.py
 43      19    253      2      198 subplot@1127-1324@./pyplot.py
-42      17    546      6      89 calc_label_rot_and_inline@327-415@./contour.py
+Manual calculation: subplot()
+PI = 18, s = 1 --> M = PI - s + 2 = 19
 
 //Ahmad's functions
 94      35    673     28     309 boxplot@3713-4021@./axes/_axes.py
@@ -100,7 +102,7 @@ The `_apply_params()` function sets various properties of an axis in a matplotli
 
 ##### Ronan: 
 
-`Calc_label_rot_and_inline()`: Calculate the appropriate label rotation given the linecontour coordinates in screen units, the index of the label location and the label width. The method used here involves computing the path length along the contour in pixel coordinates and then looking approximately (label width / 2) away from central point to determine rotation and then to break contour if desired. We have to check a lot of conditions thus the high complexity of the function.
+`figure()`: Create a new figure, or activate an existing figure. This function takes several parameters, such as num, figsize, dpi, facecolor, edgecolor, frameon, and FigureClass, which allow customization of the created or activated figure. The number of parameter to handle leads to the complexity of the function.
 
 `Subplot()`: adds subplot to a current figure at the specified grid position.  It is similar to the `subplots()` function however unlike `subplots()` it adds one subplot at a time. So to create multiple plots you will need several lines of code with the `subplot()` function. The function had to check a lot of conditions too leading to a high complexity.
 
@@ -185,6 +187,11 @@ The table() function took 89.28571428571429% of its branches, 25 out of 28, duri
 The streamplot() function took 79.3103448275862% of its branches, 23 out of 29, during the tests.
 //Klara's new result:
 The streamplot() function took 93.10344827586206% of its branches, 27 out of 29, during the tests.
+
+//Ronan's old result:
+The subplot() function took 88.88888888888889% of its branches, 16 out of 18, during the tests.
+//Ronan's new result:
+The subplot() function took 100% of its branches, 18 out of 18, during the tests.
 ```
 
 #### Jonas: 
@@ -242,8 +249,11 @@ Ahmad: [file](./lib/matplotlib/tests/func_boxplot.py)
 * `boxplot_test_empty_string()`
 * `boxplot_test_patchArtist_color()`
 
-Ronan: 
+Ronan: [file](./lib/matplotlib/tests/test_pyplot_ronan.py)
 * `test_subplot_confused_with_subplots()`
+* `test_figure_not_managed_by_pyplot`
+* `test_figure_with_num_str`
+* `test_figure_label_attributed`
 
 
 ## Self-assessment: Way-of-working
@@ -290,4 +300,4 @@ Ahmad: counted CCN by hand for _apply_params and plotbox() functions. In additio
 
 Jonas (aiming for P+): Counted CCN by hand for the subsuper() function, wrote the DIY branch coverage tool, implemented manual branch coverage for the hist() function, wrote four new tests for the hist() function to improve branch coverage from 81% to 88.9%, refactored the hist() function from CCN 77-42, wrote the report together with Klara, Pontus and Ahmad.
 
-Ronan: counted CCN by hand for subplot() and calc_label_rot_and_inline() functions. In addition, implemented manual coverage for subplot() function. Wrote a test for subplot().
+Ronan (aiming for P+): counted CCN by hand for subplot() and figure() functions. In addition, implemented manual coverage for subplot() function. Wrote a test for subplot() and 3 for figure().
