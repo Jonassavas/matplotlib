@@ -57,7 +57,7 @@ def writeRes():
 
     f.write("||\n")
     f.write(
-        f"The hist() function took {100 * (currTakenBranches / len(get_subplot_BranchBools))}% of its branches, {currTakenBranches} out of {len(get_subplot_BranchBools)}, during the tests.")
+        f"The subplot() function took {100 * (currTakenBranches / len(get_subplot_BranchBools))}% of its branches, {currTakenBranches} out of {len(get_subplot_BranchBools)}, during the tests.")
     f.write("\n")
 
     #Klara
