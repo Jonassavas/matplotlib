@@ -34,6 +34,8 @@ figure. See `.pyplot.figure`, `.pyplot.subplots`, and
 See :ref:`api_interfaces` for an explanation of the tradeoffs between the
 implicit and explicit interfaces.
 """
+from matplotlib.tests.conftest import get_subplot_BranchBools
+
 
 from contextlib import ExitStack
 from enum import Enum
@@ -1262,9 +1264,13 @@ def subplot(*args, **kwargs):
     unset = object()
     projection = kwargs.get('projection', unset)
     polar = kwargs.pop('polar', unset)
-    if polar is not unset and polar:
+    if polar is not unset and polar:  # branch 0 and 1
+        get_subplot_BranchBools[0] = True
+        get_subplot_BranchBools[1] = True
         # if we got mixed messages from the user, raise
-        if projection is not unset and projection != 'polar':
+        if projection is not unset and projection != 'polar':  # branch 2 and 3
+            get_subplot_BranchBools[2] = True
+            get_subplot_BranchBools[3] = True
             raise ValueError(
                 f"polar={polar}, yet projection={projection!r}. "
                 "Only one of these arguments should be supplied."
@@ -1272,7 +1278,8 @@ def subplot(*args, **kwargs):
         kwargs['projection'] = projection = 'polar'
 
     # if subplot called without arguments, create subplot(1, 1, 1)
-    if len(args) == 0:
+    if len(args) == 0:  # branch 4
+        get_subplot_BranchBools[4] = True
         args = (1, 1, 1)
 
     # This check was added because it is very easy to type subplot(1, 2, False)
@@ -1280,12 +1287,17 @@ def subplot(*args, **kwargs):
     # cases, no error will ever occur, but mysterious behavior can result
     # because what was intended to be the sharex argument is instead treated as
     # a subplot index for subplot()
-    if len(args) >= 3 and isinstance(args[2], bool):
+    if len(args) >= 3 and isinstance(args[2], bool):  # branch 5 and 6
+        get_subplot_BranchBools[5] = True
+        get_subplot_BranchBools[6] = True
         _api.warn_external("The subplot index argument to subplot() appears "
                            "to be a boolean. Did you intend to use "
                            "subplots()?")
     # Check for nrows and ncols, which are not valid subplot args:
-    if 'nrows' in kwargs or 'ncols' in kwargs:
+    if 'nrows' in kwargs or 'ncols' in kwargs:  # branch 7 and 8
+        get_subplot_BranchBools[7] = True
+        if ('nrows' not in kwargs):
+            get_subplot_BranchBools[8] = True
         raise TypeError("subplot() got an unexpected keyword argument 'ncols' "
                         "and/or 'nrows'.  Did you intend to call subplots()?")
 
@@ -1294,31 +1306,44 @@ def subplot(*args, **kwargs):
     # First, search for an existing subplot with a matching spec.
     key = SubplotSpec._from_subplot_args(fig, args)
 
-    for ax in fig.axes:
+    for ax in fig.axes:  # branch 9
+        get_subplot_BranchBools[9] = True
         # if we found an Axes at the position sort out if we can re-use it
-        if ax.get_subplotspec() == key:
+        if ax.get_subplotspec() == key:  # branch 10
+            get_subplot_BranchBools[10] = True
             # if the user passed no kwargs, re-use
             if kwargs == {}:
+                get_subplot_BranchBools[11] = True
                 break
             # if the axes class and kwargs are identical, reuse
             elif ax._projection_init == fig._process_projection_requirements(
-                *args, **kwargs
-            ):
+                    *args, **kwargs
+            ):  # branch 11
+                get_subplot_BranchBools[11] = True
                 break
-    else:
+    else:  # branch 12
+        get_subplot_BranchBools[12] = True
         # we have exhausted the known Axes and none match, make a new one!
         ax = fig.add_subplot(*args, **kwargs)
 
     fig.sca(ax)
 
-    axes_to_delete = [other for other in fig.axes
-                      if other != ax and ax.bbox.fully_overlaps(other.bbox)]
-    if axes_to_delete:
+    axes_to_delete = [other for other in fig.axes  # branch 13
+                      if other != ax and ax.bbox.fully_overlaps(other.bbox)]  # branch 14 and 15
+    if (len(fig.axes) != 0):
+        get_subplot_BranchBools[13] = True
+    if (len(axes_to_delete) != 0):
+        get_subplot_BranchBools[14] = True
+        get_subplot_BranchBools[15] = True
+
+    if axes_to_delete:  # branch 16
+        get_subplot_BranchBools[16] = True
         _api.warn_deprecated(
             "3.6", message="Auto-removal of overlapping axes is deprecated "
-            "since %(since)s and will be removed %(removal)s; explicitly call "
-            "ax.remove() as needed.")
-    for ax_to_del in axes_to_delete:
+                           "since %(since)s and will be removed %(removal)s; explicitly call "
+                           "ax.remove() as needed.")
+    for ax_to_del in axes_to_delete:  # branch 17
+        get_subplot_BranchBools[17] = True
         delaxes(ax_to_del)
 
     return ax
