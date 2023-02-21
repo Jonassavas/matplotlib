@@ -216,7 +216,7 @@ Refactored the streamplot function to reduce the cyclomatic complexity from CNN 
 
 #### Ronan
 
-* Improved branch coverage of subplot() with one test case and of figure() with 3 new test cases.
+* Improved branch coverage of subplot() with one test case and of figure() with 3 new test cases. Subplot's coverage went from 88% to 100% and figure's coverage went from 40% to 73%.
 * Reduced the CCN from 22 -> 13 for the subplot function() wich is about 41 % reduction.
 
 
@@ -307,4 +307,9 @@ Ahmad: counted CCN by hand for _apply_params and plotbox() functions. In additio
 
 Jonas (aiming for P+): Counted CCN by hand for the subsuper() function, wrote the DIY branch coverage tool, implemented manual branch coverage for the hist() function, wrote four new tests for the hist() function to improve branch coverage from 81% to 88.9%, refactored the hist() function from CCN 77-42, wrote the report together with Klara, Pontus and Ahmad.
 
-Ronan (aiming for P+): counted CCN by hand for subplot() and figure() functions. In addition, implemented manual coverage for subplot() function. Wrote a test for subplot() and 3 for figure().
+Ronan (aiming for P+): 
+* Counted CCN by hand for subplot() and figure() functions. 
+* Implemented manual coverage for subplot() function.
+* Wrote a test for subplot() and 3 for figure().
+* Refactor subplot() function with 41% improvement.
+* Used the issue tracker and systematic commit messages.
