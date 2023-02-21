@@ -26,6 +26,12 @@ The hist() function took 81.69014084507043% of its branches, 58 out of 71, durin
 || Branch 24 taken: True || Branch 25 taken: True || Branch 26 taken: True || Branch 27 taken: False ||
 The table() function took 75.0% of its branches, 21 out of 28, during the tests.
 || Branch 0 taken: True || Branch 1 taken: True || Branch 2 taken: True || Branch 3 taken: True ||
+|| Branch 4 taken: True || Branch 5 taken: False || Branch 6 taken: False || Branch 7 taken: True ||
+|| Branch 8 taken: True || Branch 9 taken: True || Branch 10 taken: True || Branch 11 taken: True ||
+|| Branch 12 taken: True || Branch 13 taken: True || Branch 14 taken: True || Branch 15 taken: True ||
+|| Branch 16 taken: True || Branch 17 taken: True ||
+The subplot() function took 88.88888888888889% of its branches, 16 out of 18, during the tests.
+|| Branch 0 taken: True || Branch 1 taken: True || Branch 2 taken: True || Branch 3 taken: True ||
 || Branch 4 taken: True || Branch 5 taken: True || Branch 6 taken: False || Branch 7 taken: True ||
 || Branch 8 taken: True || Branch 9 taken: False || Branch 10 taken: True || Branch 11 taken: False ||
 || Branch 12 taken: True || Branch 13 taken: True || Branch 14 taken: True || Branch 15 taken: True ||
