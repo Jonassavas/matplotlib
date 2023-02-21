@@ -29,6 +29,12 @@ The table() function took 89.28571428571429% of its branches, 25 out of 28, duri
 || Branch 4 taken: True || Branch 5 taken: True || Branch 6 taken: True || Branch 7 taken: True ||
 || Branch 8 taken: True || Branch 9 taken: True || Branch 10 taken: True || Branch 11 taken: True ||
 || Branch 12 taken: True || Branch 13 taken: True || Branch 14 taken: True || Branch 15 taken: True ||
+|| Branch 16 taken: True || Branch 17 taken: True ||
+The subplot() function took 100.0% of its branches, 18 out of 18, during the tests.
+|| Branch 0 taken: True || Branch 1 taken: True || Branch 2 taken: True || Branch 3 taken: True ||
+|| Branch 4 taken: True || Branch 5 taken: True || Branch 6 taken: True || Branch 7 taken: True ||
+|| Branch 8 taken: True || Branch 9 taken: True || Branch 10 taken: True || Branch 11 taken: True ||
+|| Branch 12 taken: True || Branch 13 taken: True || Branch 14 taken: True || Branch 15 taken: True ||
 || Branch 16 taken: True || Branch 17 taken: True || Branch 18 taken: True || Branch 19 taken: True ||
 || Branch 20 taken: True || Branch 21 taken: True || Branch 22 taken: True || Branch 23 taken: True ||
 || Branch 24 taken: True || Branch 25 taken: False || Branch 26 taken: False || Branch 27 taken: True ||
