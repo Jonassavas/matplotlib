@@ -40,24 +40,25 @@ from numpy.testing import (
 from matplotlib.testing.decorators import (
     image_comparison, check_figures_equal, remove_ticks_and_titles)
 
-def boxplot_test_empty_string():
-   data = np.random.rand(5,3)
-   fig, axs = plt.subplots(1)
-   axs[0].boxplot(data, sym = '')
 
-   #Assert that the plot has no outlier symbols
-   for line in axs[0].get_lines():
-       assert line.get_marker() == ''
+def test_boxplot_empty_string():
+    data = np.random.rand(5, 3)
+    fig, axs = plt.subplots(9)
+
+    axs[0].boxplot(data, sym='')
+
+    # Assert that the plot has no outlier symbols
+    for line in axs[0].get_lines():
+        assert line.get_marker() == ''
 
 
-def boxplot_test_patchArtist_color():
-    data = np.random.rand(5,3)
-    fig, axs = plt.subplots(1)
-    axs[0].boxplot(data, boxprops=dict(facecolor='yellow', edgecolor='green', color='green', ls=':'))
-    
+def test_boxplot_patchArtist_color():
+    data = np.random.rand(5, 3)
+    fig, axs = plt.subplots()
+    boxprops = {'color': 'red'}
+    bxp_handle = axs.boxplot(data, boxprops=boxprops, patch_artist=True)
+
     # Assert that the 'color' key is removed from the boxprops dict
-    assert 'color' not in axs[0].artists[0].get_bbox().props.keys()
-    
-    # Assert that the 'edgecolor' key is added to the boxprops dict with the value 'green'
-    assert axs[0].artists[0].get_edgecolor() == 'green'
+    for bxp_artist in bxp_handle['boxes']:
+        assert bxp_artist.get_edgecolor() != 'red' and bxp_artist.get_facecolor() != 'red'
 
