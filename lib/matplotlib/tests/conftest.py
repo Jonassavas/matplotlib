@@ -13,6 +13,8 @@ tableBranchBools = [False for i in range(28)]
 
 get_subplot_BranchBools = [False for i in range(18)]
 
+get_figure_BranchBools = [False for i in range(15)]
+
 
 def writeRes():
     currTakenBranches = 0
@@ -46,6 +48,22 @@ def writeRes():
     f.write("\n")
 
     ##Ronan
+    # figure function
+    currTakenBranches = 0
+    global get_figure_BranchBools
+    for currBranchNr in range(len(get_figure_BranchBools)):
+        if (currBranchNr % 4 == 0 and currBranchNr != 0):
+            f.write("||\n")
+        f.write(f"|| Branch {currBranchNr} taken: {get_figure_BranchBools[currBranchNr]} ")
+        if (get_figure_BranchBools[currBranchNr]):
+            currTakenBranches += 1
+
+    f.write("||\n")
+    f.write(
+        f"The figure() function took {100 * (currTakenBranches / len(get_figure_BranchBools))}% of its branches, {currTakenBranches} out of {len(get_figure_BranchBools)}, during the tests.")
+    f.write("\n")
+
+    # subplot function
     currTakenBranches = 0
     global get_subplot_BranchBools
     for currBranchNr in range(len(get_subplot_BranchBools)):
