@@ -35,8 +35,6 @@ See :ref:`api_interfaces` for an explanation of the tradeoffs between the
 implicit and explicit interfaces.
 """
 from matplotlib.tests.conftest import get_subplot_BranchBools
-from matplotlib.tests.conftest import get_figure_BranchBools
-
 
 
 from contextlib import ExitStack
@@ -777,9 +775,7 @@ def figure(num=None,  # autoincrement if None, else integer from 1-N
     in the matplotlibrc file.
     """
     if isinstance(num, FigureBase):
-        get_figure_BranchBools[0] = True
         if num.canvas.manager is None:
-            get_figure_BranchBools[1] = True
             raise ValueError("The passed figure is not managed by pyplot")
         _pylab_helpers.Gcf.set_active(num.canvas.manager)
         return num.figure
@@ -788,34 +784,24 @@ def figure(num=None,  # autoincrement if None, else integer from 1-N
     next_num = max(allnums) + 1 if allnums else 1
     fig_label = ''
     if num is None:
-        get_figure_BranchBools[2] = True
         num = next_num
     elif isinstance(num, str):
-        get_figure_BranchBools[3] = True
         fig_label = num
         all_labels = get_figlabels()
         if fig_label not in all_labels:
-            get_figure_BranchBools[4] = True
             if fig_label == 'all':
-                get_figure_BranchBools[5] = True
                 _api.warn_external("close('all') closes all existing figures.")
             num = next_num
         else:
-            get_figure_BranchBools[6] = True
             inum = all_labels.index(fig_label)
             num = allnums[inum]
     else:
-        get_figure_BranchBools[7] = True
         num = int(num)  # crude validation of num argument
 
     manager = _pylab_helpers.Gcf.get_fig_manager(num)
     if manager is None:
-        get_figure_BranchBools[8] = True
-
         max_open_warning = rcParams['figure.max_open_warning']
         if len(allnums) == max_open_warning >= 1:
-            get_figure_BranchBools[9] = True
-
             _api.warn_external(
                 f"More than {max_open_warning} figures have been opened. "
                 f"Figures created through the pyplot interface "
@@ -831,18 +817,12 @@ def figure(num=None,  # autoincrement if None, else integer from 1-N
             FigureClass=FigureClass, **kwargs)
         fig = manager.canvas.figure
         if fig_label:
-            get_figure_BranchBools[10] = True
-
             fig.set_label(fig_label)
 
         for hookspecs in rcParams["figure.hooks"]:
-            get_figure_BranchBools[11] = True
-
             module_name, dotted_name = hookspecs.split(":")
             obj = importlib.import_module(module_name)
             for part in dotted_name.split("."):
-                get_figure_BranchBools[12] = True
-
                 obj = getattr(obj, part)
             obj(fig)
 
@@ -855,13 +835,9 @@ def figure(num=None,  # autoincrement if None, else integer from 1-N
         draw_if_interactive()
 
         if _REPL_DISPLAYHOOK is _ReplDisplayHook.PLAIN:
-            get_figure_BranchBools[13] = True
-
             fig.stale_callback = _auto_draw_if_interactive
 
     if clear:
-        get_figure_BranchBools[14] = True
-
         manager.canvas.figure.clear()
 
     return manager.canvas.figure
