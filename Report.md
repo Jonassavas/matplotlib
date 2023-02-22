@@ -50,6 +50,9 @@ PI = 18, s = 1 --> M = PI - s + 2 = 19
 //Ahmad's functions
 94      35    673     28     309 boxplot@3713-4021@./axes/_axes.py
 38      15    418      2      46 _apply_params@351-396@./axis.py
+Manual calculation: _apply_params()
+PI = 35, 35 - 26 + 2 = 11
+
 
 //Pontus's functions
 57      17    431      8     108 get_tight_layout_figure@194-301@./_tight_layout.py
