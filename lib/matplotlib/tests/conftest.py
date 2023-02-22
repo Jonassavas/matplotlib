@@ -48,6 +48,7 @@ def writeRes():
     f.write("\n")
 
     ##Ronan
+    # figure function
     currTakenBranches = 0
     global get_figure_BranchBools
     for currBranchNr in range(len(get_figure_BranchBools)):
@@ -59,7 +60,22 @@ def writeRes():
 
     f.write("||\n")
     f.write(
-        f"The subplot() function took {100 * (currTakenBranches / len(get_figure_BranchBools))}% of its branches, {currTakenBranches} out of {len(get_figure_BranchBools)}, during the tests.")
+        f"The figure() function took {100 * (currTakenBranches / len(get_figure_BranchBools))}% of its branches, {currTakenBranches} out of {len(get_figure_BranchBools)}, during the tests.")
+    f.write("\n")
+
+    # subplot function
+    currTakenBranches = 0
+    global get_subplot_BranchBools
+    for currBranchNr in range(len(get_subplot_BranchBools)):
+        if (currBranchNr % 4 == 0 and currBranchNr != 0):
+            f.write("||\n")
+        f.write(f"|| Branch {currBranchNr} taken: {get_subplot_BranchBools[currBranchNr]} ")
+        if (get_subplot_BranchBools[currBranchNr]):
+            currTakenBranches += 1
+
+    f.write("||\n")
+    f.write(
+        f"The subplot() function took {100 * (currTakenBranches / len(get_subplot_BranchBools))}% of its branches, {currTakenBranches} out of {len(get_subplot_BranchBools)}, during the tests.")
     f.write("\n")
 
     #Klara
