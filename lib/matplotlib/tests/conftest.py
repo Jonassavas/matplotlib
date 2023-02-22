@@ -12,6 +12,8 @@ streamBranchBools = [False for i in range(29)]
 
 tableBranchBools = [False for i in range(28)]
 
+get_subplot_BranchBools = [False for i in range(18)]
+
 
 def writeRes():
     currTakenBranches = 0
@@ -43,10 +45,24 @@ def writeRes():
         f"The table() function took {100 * (currTakenBranches / len(tableBranchBools))}% of its branches, {currTakenBranches} out of {len(tableBranchBools)}, during the tests.")
     f.write("\n")
 
+    ##Ronan
+    currTakenBranches = 0
+    global get_subplot_BranchBools
+    for currBranchNr in range(len(get_subplot_BranchBools)):
+        if (currBranchNr % 4 == 0 and currBranchNr != 0):
+            f.write("||\n")
+        f.write(f"|| Branch {currBranchNr} taken: {get_subplot_BranchBools[currBranchNr]} ")
+        if (get_subplot_BranchBools[currBranchNr]):
+            currTakenBranches += 1
+
+    f.write("||\n")
+    f.write(
+        f"The subplot() function took {100 * (currTakenBranches / len(get_subplot_BranchBools))}% of its branches, {currTakenBranches} out of {len(get_subplot_BranchBools)}, during the tests.")
+    f.write("\n")
+
     #Klara
     currTakenBranches = 0
     global streamBranchBools
-    f = open("BranchCovRes.txt", "w")
     for currBranchNr in range(len(streamBranchBools)):
         if (currBranchNr % 4 == 0 and currBranchNr != 0):
             f.write("||\n")
@@ -56,13 +72,12 @@ def writeRes():
 
     f.write("||\n")
     f.write(
-        f"The hist() function took {100 * (currTakenBranches / len(streamBranchBools))}% of its branches, {currTakenBranches} out of {len(streamBranchBools)}, during the tests.")
+        f"The streamplot() function took {100 * (currTakenBranches / len(streamBranchBools))}% of its branches, {currTakenBranches} out of {len(streamBranchBools)}, during the tests.")
     f.write("\n")
 
     #Ahmad
     currTakenBranches = 0
     global boxplotlist
-    f = open("BranchCovRes.txt", "w")
     for currBranchNr in range(len(boxplotlist)):
         if (currBranchNr % 4 == 0 and currBranchNr != 0):
             f.write("||\n")
@@ -72,8 +87,9 @@ def writeRes():
 
     f.write("||\n")
     f.write(
-        f"The hist() function took {100 * (currTakenBranches / len(boxplotlist))}% of its branches, {currTakenBranches} out of {len(boxplotlist)}, during the tests.")
+        f"The boxplot() function took {100 * (currTakenBranches / len(boxplotlist))}% of its branches, {currTakenBranches} out of {len(boxplotlist)}, during the tests.")
     f.write("\n")
+
 
     f.close()
 
